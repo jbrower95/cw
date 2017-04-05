@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<style>
+			body {
+				width: 200px;
+				background: orange;
+			}
+
+			button {
+				height: 20px;
+			}
+
+			#cws {
+				/* the list of cws */
+			}
+
+			.cw {
+				/* individual cw class */
+			}
+		</style>
+	</head>
+
+	<body>
+		<h3> Settings </h3>
+		
+		<!-- Add explanation -->
+		<input type="checkbox" id="enabled">Enabled?</input> </br>
+		<button type="submit" id="removeCW">Clear all</button> </br>
+		<input type="text" id="addCW" placeholder="add cw"></input>
+
+		<ul id="cws">
+			<!-- All the CWs. -->
+		</ul>
+	</body>
+
+	<script src="jquery.min.js"></script>
+	<script src="storage.js"></script>
+	<script src="popup.js"></script>
+</html>

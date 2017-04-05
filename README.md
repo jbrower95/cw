@@ -15,3 +15,5 @@ Contributing:
 4. animations for blurring / unblurring? Right now it's choppy as hell.
 5. Crypto / security -- maybe store words as hashes w/ salt derived from a user pin code, and then authenticate user once to activate the plugin.
 I'm sure you could come up with a scheme where there is not a list of cw's sitting unencrypted in the user's local storage.
+
+LICENSE: MIT

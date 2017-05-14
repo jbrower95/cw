@@ -1,8 +1,8 @@
 {
 "manifest_version": 2,
     "name": "Content-Warning",
-    "description": "Browser-enforced content-warning for Facebook.",
-    "version": "0.1",
+    "description": "Automatically hide CW posts on facebook.",
+    "version": "0.2",
     "permissions": [
           "storage"
     ],

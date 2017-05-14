@@ -15,12 +15,11 @@ function async_put(key,val) {
 function async_get(key, def={}) {
     return new Promise(function(resolve, reject) {
         // Fetch it using the Chrome extension storage API.
-        chrome.storage.local.get(key, function(objects) {
-          if (!!objects[key]) {
-            resolve(objects[key]);
-          } else {
-            resolve(def);
-          }
+        let query = {};
+        query[key] = def;
+        chrome.storage.local.get(query, function(objects) {
+          resolve(objects[key]);
+          console.log("Got value for key '" + key + "': " + objects[key]);
         });
     });
 }

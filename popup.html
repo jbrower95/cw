@@ -1,39 +1,44 @@
 <html>
 	<head>
-		<style>
-			body {
-				width: 200px;
-				background: orange;
-			}
-
-			button {
-				height: 20px;
-			}
-
-			#cws {
-				/* the list of cws */
-			}
-
-			.cw {
-				/* individual cw class */
-			}
-		</style>
+		<link rel="stylesheet" href="css/switchery.css"></link>
+		<link rel="stylesheet" href="css/popup.css"></link>
 	</head>
 
 	<body>
-		<h3> Settings </h3>
+		<h3 id="title">cw settings</h3>
+		<h4 id="credits">made by justin brower</h4>
 		
 		<!-- Add explanation -->
-		<input type="checkbox" id="enabled">Enabled?</input> </br>
-		<button type="submit" id="removeCW">Clear all</button> </br>
-		<input type="text" id="addCW" placeholder="add cw"></input>
+		<div class="row"> 
+			<div class="row_left">
+				<p class="row_title">Enabled</p> 
+			</div>
 
-		<ul id="cws">
-			<!-- All the CWs. -->
-		</ul>
+			<div class="row_right">
+				<input type="checkbox" class="js-switch" id="enabled" style="position: absolute; left: 100;"></input> 
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="row_left">
+				<p class="row_title">CW/TW/CN only?</p> 
+				<p class="row_desc">only block posts containing explicit content warnings.</p>
+			</div>
+
+			<div class="row_right">
+				<input type="checkbox" class="js-switch" id="cwOnly"></input> 
+			</div>
+		</div>
+
+		<div id="cws">
+
+		</div>
 	</body>
-
 	<script src="jquery.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/switchery.js"></script>
+	<script src="js/taggle.min.js"></script>
+
 	<script src="storage.js"></script>
 	<script src="popup.js"></script>
 </html>

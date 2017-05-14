@@ -12,12 +12,14 @@ var cws = [];
 var regexs = [];
 var cache = {};
 var enabled = false;
+var cwOnly = true;
 
 function refetch() {
 	return new Promise(function(resolve, reject) {
-		async_get_all(["cws", "enabled"]).then(function(objs) {
+		async_get_all(["cws", "enabled", "cwOnly"]).then(function(objs) {
 			cws = objs["cws"];
 			enabled = objs["enabled"];
+			cwOnly = objs["cwOnly"];
 			/* 
 			console.log("Refetch: enabled? - " + enabled);
 			console.log("Cws: ");
@@ -82,14 +84,18 @@ function runPlugin() {
 		$('.userContent')
 		        .filter(function() {
 		        	// filter for only cw / tw'd posts.
-		        	let self = $(this);
-		        	let text = self.text();
-		        	if (cache[text] === true || cache[text] === false) {
-		        		return cache[text];
+		        	if (cwOnly) {
+			        	let self = $(this);
+			        	let text = self.text();
+			        	if (cache[text] === true || cache[text] === false) {
+			        		return cache[text];
+			        	} else {
+			        		let result = !!cwTwExp.exec(text);
+			        		cache[text] = result;
+			        		return result;
+			        	}
 		        	} else {
-		        		let result = !!cwTwExp.exec(text);
-		        		cache[text] = result;
-		        		return result;
+		        		return true;
 		        	}
 		        })
 		        .each(function(idx){

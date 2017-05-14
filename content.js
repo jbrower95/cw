@@ -20,11 +20,11 @@ function refetch() {
 			cws = objs["cws"];
 			enabled = objs["enabled"];
 			cwOnly = objs["cwOnly"];
-			/* 
+			
 			console.log("Refetch: enabled? - " + enabled);
 			console.log("Cws: ");
 			console.log(cws); 
-			*/
+
 			regexs = $.map($.makeArray(cws), function(val, i) {
 				return new RegExp(val, "i"); // case insensitive regex search.
 			});
@@ -77,12 +77,12 @@ function unblur(obj) {
 }
 
 function runPlugin() {
-	console.log("Running plugin.");
 	/* check for fuzzy matching on fb page. */
 	if (!!cws) {
 		// 2: Apply it selectively.
-		$('.userContent')
-		        .filter(function() {
+		let selection = $(".userContent");
+		if (cwOnly) {
+			selection = selection.filter(function() {
 		        	// filter for only cw / tw'd posts.
 		        	if (cwOnly) {
 			        	let self = $(this);
@@ -97,43 +97,45 @@ function runPlugin() {
 		        	} else {
 		        		return true;
 		        	}
-		        })
-		        .each(function(idx){
-		        	let self = $(this).parent().closest(".fbUserContent");
-
-		        	let did_match = containsFlag($(this).text());
-
-		        	let shouldBlur = enabled && !self.hasClass("blurred") && did_match;
-		        	let shouldUnblur = self.hasClass("blurred") && (!did_match || !enabled);
-		        	
-		        	if (shouldUnblur) {
-		        		// unblur
-		        		self.removeClass("blurred");
-		        		$(".warning", self.parent().closest('div')).remove();
-		        		return;
-		        	}
-
-		        	if (!shouldBlur) {
-		        		// nop
-		        		return;
-		        	}
-
-		        	let message = document.createElement("p");
-		        	message.innerHTML = "This post was hidden automatically.";
-		        	message.className = "warning";
-
-					let caption = document.createElement("p");
-					caption.innerHTML = "click to show";
-					caption.className = "warning fcg";
-
-					self.parent().closest('div').prepend(caption).prepend(message);
-					self.addClass("blurred");
-					self.click(function() { 
-						self.removeClass("blurred"); 
-						$(message).remove();
-						$(caption).remove();
-					});
 		        });
+		}
+
+        selection.each(function(idx){
+        	let self = $(this).parent().closest(".fbUserContent");
+
+        	let did_match = containsFlag($(this).text());
+
+        	let shouldBlur = enabled && !self.hasClass("blurred") && did_match;
+        	let shouldUnblur = self.hasClass("blurred") && (!did_match || !enabled);
+        	
+        	if (shouldUnblur) {
+        		// unblur
+        		self.removeClass("blurred");
+        		$(".warning", self.parent().closest('div')).remove();
+        		return;
+        	}
+
+        	if (!shouldBlur) {
+        		// nop
+        		return;
+        	}
+
+        	let message = document.createElement("p");
+        	message.innerHTML = "This post was hidden automatically.";
+        	message.className = "warning";
+
+			let caption = document.createElement("p");
+			caption.innerHTML = "click to show";
+			caption.className = "warning fcg";
+
+			self.parent().closest('div').prepend(caption).prepend(message);
+			self.addClass("blurred");
+			self.click(function() { 
+				self.removeClass("blurred"); 
+				$(message).remove();
+				$(caption).remove();
+			});
+        });
 	}
 }
 

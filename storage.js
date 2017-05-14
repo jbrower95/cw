@@ -6,6 +6,7 @@ function async_put(key,val) {
         change[key] = val;
         chrome.storage.local.set(change, function() {
           // Notify that we saved.
+          console.log("Set value for key " + key + " => " + val);
           resolve();
         });
     });

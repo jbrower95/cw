@@ -10,22 +10,39 @@ function setSwitchery(switchElement, checkedBool) {
     }
 }
 
+function showPopup(url) {
+	chrome.tabs.create({
+	    'url': url,
+	    'selected': true
+	  });
+}
+
 (function() {
 
 	enabled_switch = new Switchery(document.getElementById("enabled"));
-
 	cwOnly_switch = new Switchery(document.getElementById("cwOnly"));
 	
-
-   	$("#enabled").click(function() {
+   	$("#enabled").change(function() {
 		let checked = this.checked;
+		console.log("Saving " + checked);
 		async_put("enabled", checked).then(() => tellContentScriptToRefresh());;
 	});
 
-	$("#cwOnly").click(function() {
+	$("#cwOnly").change(function() {
 		let checked = this.checked;
 		console.log("Saving cwOnly: " + checked);
 		async_put("cwOnly", checked).then(() => tellContentScriptToRefresh());
+	});
+
+	$("#issues").click(function() {
+		let link = $("#issues").attr("href");
+		console.log(link);
+		showPopup(link);
+	});
+
+	$("#review").click(function() {
+		let link = $("#review").attr("href");
+		showPopup(link);
 	});
 
    	refresh();
@@ -47,6 +64,8 @@ function refresh() {
 					    onTagAdd: function(event, tag) {
 					        async_get("cws", []).then(function(cws) {
 				         		cws.push(tag);
+				         		console.log("Mutated cws:");
+				         		console.log(cws);
 				         		async_put("cws", cws).then(function() {
 				         			tellContentScriptToRefresh();
 				         		});
@@ -57,6 +76,8 @@ function refresh() {
 					        	let index = cws.indexOf(tag);
 					        	if (index > -1) {
 								    cws.splice(index, 1);
+					         		console.log("Mutated cws:");
+					         		console.log(cws);
 								    async_put("cws", cws).then(function() {
 					         			tellContentScriptToRefresh();
 					         		});

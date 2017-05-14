@@ -1,10 +1,12 @@
 {
 "manifest_version": 2,
     "name": "Content-Warning",
+    "short_name": "CW",
     "description": "Automatically hide CW posts on facebook.",
-    "version": "0.2",
+    "version": "0.3",
     "permissions": [
-          "storage"
+          "storage",
+          "tabs"
     ],
     "icons": { "16": "icon16.png",
                "48": "icon48.png",

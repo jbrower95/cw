@@ -3,7 +3,7 @@
     "name": "Content-Warning",
     "short_name": "CW",
     "description": "Automatically hide CW posts on facebook.",
-    "version": "0.3",
+    "version": "0.4",
     "permissions": [
           "storage",
           "tabs"
